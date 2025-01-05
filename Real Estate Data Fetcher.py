@@ -1,6 +1,20 @@
 import requests
 import csv
 from datetime import datetime
+import os
+
+# Function to read the API key from a file
+def read_api_key(file_name="API_Key.txt"):
+    try:
+        with open(file_name, "r") as file:
+            api_key = file.read().strip()  # Read and remove any extra whitespace or newline
+        return api_key
+    except FileNotFoundError:
+        print(f"Error: The file '{file_name}' was not found. Please ensure it exists in the same directory.")
+        exit(1)
+    except Exception as e:
+        print(f"An error occurred while reading the API key: {e}")
+        exit(1)
 
 # Function to get ZPID from an address
 def get_zpid(address, api_key, api_host):
@@ -46,13 +60,15 @@ def get_price_history(zpid, api_key, api_host):
     # Return an empty list if no data is available
     return []
 
-# RapidAPI Key and Host
-api_key = ""
+# Read the API key from the file
+api_key = read_api_key()
+
+# RapidAPI host
 api_host = "zillow-com1.p.rapidapi.com"
 
 # List of addresses
 addresses = [
-    "1003 Worth Creek Ln, Katy, TX"
+    "2300 Arbor Vista Dr, Charlotte, NC 28262"
 ]
 
 # Create CSV file with updated columns
