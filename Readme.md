@@ -17,6 +17,7 @@ This script:
 - Extracts and processes the three most recent price points based on timestamps.
 - Converts timestamps into human-readable date strings.
 - Writes the address, ZPID, and the three most recent price data into a CSV file.
+- Securely reads the API key from a local file named `API_Key.txt`.
 
 ---
 
@@ -26,16 +27,27 @@ This script:
 - `requests`: Used to make HTTP requests to the RapidAPI endpoint.
 - `csv`: Used to create and write data into the CSV file.
 - `datetime`: Used to convert timestamps into human-readable dates.
+- `os`: Used to handle file-related operations.
 
 ---
 
 ### Functions
 
+#### `read_api_key(file_name="API_Key.txt")`
+- **Objective**: Securely read the API key from a local file.
+- **Input**:
+  - `file_name`: Name of the file containing the API key (default is `API_Key.txt`).
+- **Output**: Returns the API key as a string.
+- **Process**:
+  1. Opens the `API_Key.txt` file and reads its content.
+  2. Trims any extra spaces or newline characters.
+  3. Handles errors if the file is not found or unreadable.
+
 #### `get_zpid(address, api_key, api_host)`
 - **Objective**: Retrieve the ZPID for a given property address.
 - **Input**:
-  - `address`: Property address (e.g., "1003 Worth Creek Ln, Katy, TX").
-  - `api_key`: RapidAPI key for authentication.
+  - `address`: Property address (e.g., "2300 Arbor Vista Dr, Charlotte, NC 28262").
+  - `api_key`: API key retrieved from `API_Key.txt`.
   - `api_host`: RapidAPI host for Zillow.
 - **Output**: Returns the ZPID if found, otherwise `None`.
 - **Process**:
@@ -47,7 +59,7 @@ This script:
 - **Objective**: Retrieve the price history for a given ZPID.
 - **Input**:
   - `zpid`: Zillow Property ID.
-  - `api_key`: RapidAPI key for authentication.
+  - `api_key`: API key retrieved from `API_Key.txt`.
   - `api_host`: RapidAPI host for Zillow.
 - **Output**: Returns a list of the three most recent price points (`[date, price]` pairs).
 - **Process**:
@@ -61,7 +73,8 @@ This script:
 
 ### Main Script
 
-- Defines a list of addresses to process.
+- Defines a list of addresses to process (e.g., `"2300 Arbor Vista Dr, Charlotte, NC 28262"`).
+- Reads the API key from the `API_Key.txt` file.
 - Creates and writes the CSV file with the following columns:
   - `Address`
   - `ZPID`
@@ -81,7 +94,7 @@ This script:
 - **Endpoint**: `https://zillow-com1.p.rapidapi.com/locationSuggestions`
 - **Purpose**: Retrieve the ZPID for a given address.
 - **Parameters**:
-  - `q`: The address query (e.g., "1003 Worth Creek Ln, Katy, TX").
+  - `q`: The address query (e.g., `"2300 Arbor Vista Dr, Charlotte, NC 28262"`).
 
 ### Price History API
 - **Endpoint**: `https://zillow-com1.p.rapidapi.com/valueHistory/listingPrices`
@@ -89,28 +102,11 @@ This script:
 
 ---
 
-## Output Example
+## File Requirements
 
-| Address                          | ZPID      | Date 1    | Price 1 | Date 2    | Price 2 | Date 3    | Price 3 |
-|----------------------------------|-----------|-----------|---------|-----------|---------|-----------|---------|
-| 1003 Worth Creek Ln, Katy, TX    | 122505953 | 2019-04-17| 310000  | 2017-08-08| 309000  | 2017-06-27| 309000  |
+1. **API_Key.txt**:
+   - A text file containing the RapidAPI key.
+   - Must be stored in the same directory as the script.
+   - Should contain only the API key with no additional spaces or lines.
 
-If data is unavailable:
-
-| Address                          | ZPID           | Date 1    | Price 1 | Date 2    | Price 2 | Date 3    | Price 3 |
-|----------------------------------|----------------|-----------|---------|-----------|---------|-----------|---------|
-| 1003 Worth Creek Ln, Katy, TX    | ZPID not found | No data   | No data | No data   | No data | No data   | No data |
-
----
-
-## Execution Instructions
-
-1. **Setup**:
-   - Obtain a RapidAPI key and enable access to the Zillow API.
-2. **Run the Script**:
-   - Save the script as `fetch_zillow_price_data.py` and run it using:
-     ```bash
-     python3 fetch_zillow_price_data.py
-     ```
-3. **Check Output**:
-   - Open `zillow_address_price_data.csv` to view the results.
+   **Example (Do not include real API key)**:
