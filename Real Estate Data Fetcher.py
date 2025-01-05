@@ -47,7 +47,7 @@ def get_price_history(zpid, api_key, api_host):
     return []
 
 # RapidAPI Key and Host
-api_key = "ef04ceee19mshc0791fc850be0a4p1131cfjsn1093878bdab9"
+api_key = ""
 api_host = "zillow-com1.p.rapidapi.com"
 
 # List of addresses
