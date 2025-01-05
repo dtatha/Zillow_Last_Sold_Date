@@ -68,7 +68,13 @@ api_host = "zillow-com1.p.rapidapi.com"
 
 # List of addresses
 addresses = [
-    "2300 Arbor Vista Dr, Charlotte, NC 28262"
+    #"2300 Arbor Vista Dr, Charlotte, NC 28262",
+    #"6415 Bay Harbor Ln, Indianapolis, IN",
+    #"14655 COPELAND WAY, BROOKSVILLE, FL",
+    #"818 COLONY PL BLDG 7 # C, SUNSET BEACH, NC",
+    #"6485 S OSAGE ST UNIT 1&2, AMARILLO, TX",
+    #"4738 WASHINGTON AVE, SHADY SIDE, MD"
+    "73 CARMEL RD, FLIPPIN, AR"
 ]
 
 # Create CSV file with updated columns
